@@ -14,11 +14,11 @@ import java.util.List;
 
 public class HabrCareerParse implements Parse {
 
-    private final DateTimeParser dateTimeParser;
-
     private static final int PAGE = 5;
 
     private static final String PAGE_LINK = "/vacancies/java_developer?page=";
+
+    private final DateTimeParser dateTimeParser;
 
     public HabrCareerParse(DateTimeParser dateTimeParser) {
         this.dateTimeParser = dateTimeParser;
@@ -54,7 +54,12 @@ public class HabrCareerParse implements Parse {
                     String linka = String.format("%s%s", link, linkElement.attr("href"));
                     System.out.printf("%s %s %s%n", vacancyName, linka, vacancyDate);
                     String description = retrieveDescription(linka);
-                    listOfLinks.add(new Post(vacancyName, description, linka, dateTimeParser.parse(vacancyDate)));
+                    listOfLinks.add(
+                            new Post(vacancyName,
+                                    description,
+                                    linka,
+                                    dateTimeParser.parse(vacancyDate))
+                    );
                 });
             }
         } catch (IOException e) {

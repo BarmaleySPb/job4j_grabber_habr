@@ -21,13 +21,15 @@ public class AlertRabbit {
 
     private static Connection connection;
 
-    private static Properties readConfig() throws Exception {
+    private static Properties readConfig() {
         Properties config = new Properties();
         try (InputStream in = AlertRabbit.class.getClassLoader()
                 .getResourceAsStream("rabbit.properties")) {
             config.load(in);
-            return config;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        return config;
     }
 
     private static void init(Properties config) {
@@ -43,7 +45,7 @@ public class AlertRabbit {
         }
     }
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         Properties config = readConfig();
         init(config);
         try {
@@ -80,9 +82,12 @@ public class AlertRabbit {
         @Override
         public void execute(JobExecutionContext context) {
             System.out.println("Rabbit runs here ...");
-            Connection connection = (Connection) context.getJobDetail().getJobDataMap().get("connection");
+            Connection connection = (Connection) context.getJobDetail()
+                    .getJobDataMap().get("connection");
             try (PreparedStatement statement =
-                         connection.prepareStatement("insert into rabbit (created_date) values (?);")) {
+                         connection.prepareStatement(
+                                 "insert into rabbit (created_date) values (?);"
+                         )) {
                 Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now());
                 statement.setTimestamp(1, timestamp);
                 statement.execute();

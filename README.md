@@ -10,6 +10,8 @@
 ### Technologies used:
 - Java 18
 - PostgreSQL
+- Quartz
+- log4j
 
 ### How to use the app:
 

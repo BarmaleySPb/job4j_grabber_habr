@@ -31,7 +31,8 @@ public class Grabber implements Grab {
     }
 
     public void cfg() throws IOException {
-        try (InputStream in = Grabber.class.getClassLoader().getResourceAsStream("app.properties")) {
+        try (InputStream in = Grabber.class.getClassLoader()
+                .getResourceAsStream("app.properties")) {
             config.load(in);
         }
     }
@@ -57,7 +58,7 @@ public class Grabber implements Grab {
     public static class GrabJob implements Job {
 
         @Override
-        public void execute(JobExecutionContext context) throws JobExecutionException {
+        public void execute(JobExecutionContext context) {
             JobDataMap map = context.getJobDetail().getJobDataMap();
             Store store = (Store) map.get("store");
             Parse parse = (Parse) map.get("parse");
@@ -72,7 +73,8 @@ public class Grabber implements Grab {
 
     public void web(Store store) {
         new Thread(() -> {
-            try (ServerSocket server = new ServerSocket(Integer.parseInt(config.getProperty("port")))) {
+            try (ServerSocket server =
+                         new ServerSocket(Integer.parseInt(config.getProperty("port")))) {
                 while (!server.isClosed()) {
                     Socket socket = server.accept();
                     try (OutputStream out = socket.getOutputStream()) {
