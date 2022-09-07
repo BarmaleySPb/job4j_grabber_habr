@@ -1,4 +1,4 @@
-package ru.job4j.model;
+package ru.job4j.grabber.model;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -9,6 +9,13 @@ public class Post {
     private String link;
     private String description;
     private LocalDateTime created;
+
+    public Post(String title, String description, String link, LocalDateTime created) {
+        this.title = title;
+        this.description = description;
+        this.link = link;
+        this.created = created;
+    }
 
     public Post(String title, String description, String link, int id, LocalDateTime created) {
         this.title = title;

@@ -1,6 +1,6 @@
-package ru.job4j.grabber;
+package ru.job4j.grabber.repository;
 
-import ru.job4j.model.Post;
+import ru.job4j.grabber.model.Post;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -9,7 +9,7 @@ import java.util.Properties;
 
 public class PsqlStore implements Store, AutoCloseable {
 
-    private Connection connection;
+    private final Connection connection;
 
     public PsqlStore(Properties config) {
         try {

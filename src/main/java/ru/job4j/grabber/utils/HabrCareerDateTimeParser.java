@@ -4,13 +4,11 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class HabrCareerDateTimeParser implements DateTimeParser {
+    private static final String FORMATTER = "yyyy-MM-dd'T'HH:mm:ssXXX";
 
     @Override
     public LocalDateTime parse(String parse) {
-        LocalDateTime result;
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        String[] res = parse.replace("T", " ").split("\\+" );
-        result = LocalDateTime.parse(res[0], formatter);
-        return result;
+        return LocalDateTime.parse(parse, DateTimeFormatter.ofPattern(FORMATTER));
     }
+
 }
